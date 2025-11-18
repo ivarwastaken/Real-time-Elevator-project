@@ -1,18 +1,18 @@
 # Real-time-Elevator-project
 
-Project Overview
+# Project Overview
 
 This code implements a control system for one signel elevator operating across four floors. The system is built in Rust and communicates with the elevator hardware through a TCP connection.
 
 Call queues and prioritization are handled according to the spec. The obstruction lever is implemented in such a way that it only halts the elevator if the door is open, or, if it's currently moving towards a floor, it waits and halts the elevator at the moment when the door opens. The stop button stops the elevator immediately no matter what, and clears all queues.
-System structure
+# System structure
 
 The system spawns individual crossbeam channels for communication between threads that can't be accessed by any other process. These are threads that send events to the main control loop, and each sensor type has its own dedicated polling thread, including call buttons, floor sensors, stop button and obstruction sensor.
 
 The elevator hardware then uses TCP in order for the elevator hardware to communicate with the polling threads, which has channels to the main control loop.
 
 Elevator calls are stored in a vector within the Elevator struct, with cabin calls given priority over hall calls.
-Module overview
+# Module overview
 src/lib.rs
 
 This is the "library" file that connects the supporting files in the "elevio" folder, which is used in main.rs, and makes it clear which files are implemented and doing what.
@@ -32,7 +32,7 @@ This file handles the main logic of the system, including initialization, call q
     serve_call: This function contains the logic that decides which call it should move on to next once a call has been served. This can depend on where in the queue the call is, and which direction the elevator is originally intending to go next.
     main: This is the main function that combines all the functions above and sets variables on startup. It enters into the loop, which uses cbc::select! to deteremine which functions to call and variables to set, based on exactly which thread it is receiving data from using recv().
 
-Call Handling algorithm
+# Call Handling algorithm
 
 When a call button is pressed:
 
@@ -44,13 +44,13 @@ When a call button is pressed:
         Determine next direction based on remaining calls
 
 Cabin calls take priority over hall calls to optimize efficiency.
-How to run and test
+# How to run and test
 
     Have rust installed on the computer
     Open a terminal and navigate to the cargo folder (the one containing 'Cargo.toml')
     Build and run by typing 'cargo run'
 
-Future Improvements
+# Future Improvements
 
     Implement multi-elevator support with distributed call allocation
     Add network resilience for handling disconnections
