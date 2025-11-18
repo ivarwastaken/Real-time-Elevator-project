@@ -16,12 +16,15 @@ Elevator calls are stored in a vector within the Elevator struct, with cabin cal
     # src/lib.rs
 
 This is the "library" file that connects the supporting files in the "elevio" folder, which is used in main.rs, and makes it clear which files are implemented and doing what.
+
     # src/elevio/elev.rs
 
 This file contains functions that manipulate the various elevator values and states such as lights, stop button true/false, obstruction true/false, motor direction, etc. All of this is implemented in the core Elevator struct that makes up all of its parameters.
+
     # src/elevio/poll.rs
 
 This file implements the polling threads containing the data used by main.rs to determine system behavior. The function call_buttons continuously checks for call button presses, floor_sensor continuously checks for which floor the elevator is at, and stop_button and obstruction also monitor whether or not someone has activated the stop button or obstruction lever respectively.
+
     # src/main.rs
 
 This file handles the main logic of the system, including initialization, call queueing, deciding motor direction, looping through the polling of input data, etc. This behaviour is determined by polled inputs by the threads in poll.rs, which is passed on to main.rs where the system logic is handled by five main modules:
