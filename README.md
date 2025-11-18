@@ -29,11 +29,11 @@ This file implements the polling threads containing the data used by main.rs to 
 
 This file handles the main logic of the system, including initialization, call queueing, deciding motor direction, looping through the polling of input data, etc. This behaviour is determined by polled inputs by the threads in poll.rs, which is passed on to main.rs where the system logic is handled by five main modules:
 
-direction_call: This function decides which direction the elevator should move in when a call is received.
-add_call_request: This creates a vector callbutton, containing data on floor and whether it is an UP, DOWN or CAB call. This is then pushed to the call_buttons queue.
-start_elevator: This is initialized once a call is received, and uses direction_call to move in the right direction.
-serve_call: This function contains the logic that decides which call it should move on to next once a call has been served. This can depend on where in the queue the call is, and which direction the elevator is originally intending to go next.
-main: This is the main function that combines all the functions above and sets variables on startup. It enters into the loop, which uses cbc::select! to deteremine which functions to call and variables to set, based on exactly which thread it is receiving data from using recv().
+"direction_call:" This function decides which direction the elevator should move in when a call is received.
+"add_call_request:" This creates a vector callbutton, containing data on floor and whether it is an UP, DOWN or CAB call. This is then pushed to the call_buttons queue.
+"start_elevator:" This is initialized once a call is received, and uses direction_call to move in the right direction.
+"serve_call:" This function contains the logic that decides which call it should move on to next once a call has been served. This can depend on where in the queue the call is, and which direction the elevator is originally intending to go next.
+"main:" This is the main function that combines all the functions above and sets variables on startup. It enters into the loop, which uses cbc::select! to deteremine which functions to call and variables to set, based on exactly which thread it is receiving data from using recv().
 
 # Call Handling algorithm
 
@@ -55,6 +55,6 @@ Build and run by typing 'cargo run'
 
 # Future Improvements
 
-    Implement multi-elevator support with distributed call allocation
-    Add network resilience for handling disconnections
-    Optimize call serving algorithm for better efficiency
+Implement multi-elevator support with distributed call allocation
+Add network resilience for handling disconnections
+Optimize call serving algorithm for better efficiency
